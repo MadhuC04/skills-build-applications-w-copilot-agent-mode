@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fetchResource } from '../api.js';
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
@@ -7,9 +6,15 @@ const Teams = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('/teams')
-      .then(({ list }) => {
-        setTeams(list);
+    fetch(`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load teams.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setTeams(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
         setError(err.message || 'Unable to load teams.');

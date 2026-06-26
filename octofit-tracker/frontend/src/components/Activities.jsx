@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fetchResource } from '../api.js';
 
 const Activities = () => {
   const [activities, setActivities] = useState([]);
@@ -7,9 +6,15 @@ const Activities = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('/activities')
-      .then(({ list }) => {
-        setActivities(list);
+    fetch(`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load activities.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setActivities(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
         setError(err.message || 'Unable to load activities.');

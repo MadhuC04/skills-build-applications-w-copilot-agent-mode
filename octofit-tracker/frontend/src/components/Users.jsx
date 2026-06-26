@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fetchResource } from '../api.js';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -7,9 +6,15 @@ const Users = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('/users')
-      .then(({ list }) => {
-        setUsers(list);
+    fetch(`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/users`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load users.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(Array.isArray(data) ? data : []);
       })
       .catch((err) => {
         setError(err.message || 'Unable to load users.');

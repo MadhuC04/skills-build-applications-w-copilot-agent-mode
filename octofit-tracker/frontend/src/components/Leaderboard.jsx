@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { fetchResource } from '../api.js';
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState({ teams: [], users: [] });
@@ -7,8 +6,14 @@ const Leaderboard = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('/leaderboard')
-      .then(({ json }) => {
+    fetch(`https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Unable to load leaderboard.');
+        }
+        return response.json();
+      })
+      .then((json) => {
         setLeaderboard({
           teams: Array.isArray(json.teams) ? json.teams : [],
           users: Array.isArray(json.users) ? json.users : [],
