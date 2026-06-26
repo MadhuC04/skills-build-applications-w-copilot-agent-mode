@@ -24,7 +24,7 @@ connectToDatabase()
   .then(() => {
     console.log('Connected to MongoDB');
     console.log(`API base URL: ${apiBaseUrl}`);
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
       console.log(`Backend listening on port ${port}`);
     });
   })
