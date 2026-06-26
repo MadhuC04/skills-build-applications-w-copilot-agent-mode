@@ -1,6 +1,6 @@
 import express from 'express';
 import apiRouter from './routes/api.js';
-import connectToDatabase from './database.js';
+import connectToDatabase from './config/database.js';
 
 const app = express();
 const port = Number(process.env.PORT ?? 8000);
