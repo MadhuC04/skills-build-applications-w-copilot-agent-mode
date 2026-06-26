@@ -5,8 +5,7 @@ export function getApiBaseUrl() {
     return `https://${codespaceName}-8000.app.github.dev/api`;
   }
 
-  const currentUrl = new URL(window.location.href);
-  return `${currentUrl.protocol}//${currentUrl.hostname}:8000/api`;
+  return 'http://localhost:8000/api';
 }
 
 export function normalizeList(response, key) {
@@ -45,7 +44,8 @@ export function normalizeList(response, key) {
 }
 
 export async function fetchResource(path, listKey) {
-  const url = `${getApiBaseUrl()}/${path}`;
+  const normalizedPath = path.replace(/^\/+/, '');
+  const url = `${getApiBaseUrl()}/${normalizedPath}`;
   const response = await fetch(url, {
     headers: {
       Accept: 'application/json',

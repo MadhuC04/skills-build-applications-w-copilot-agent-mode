@@ -7,7 +7,7 @@ const Teams = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('teams')
+    fetchResource('/teams')
       .then(({ list }) => {
         setTeams(list);
       })

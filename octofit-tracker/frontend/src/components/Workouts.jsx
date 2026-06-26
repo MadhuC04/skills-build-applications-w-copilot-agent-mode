@@ -7,7 +7,7 @@ const Workouts = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('workouts')
+    fetchResource('/workouts')
       .then(({ list }) => {
         setWorkouts(list);
       })

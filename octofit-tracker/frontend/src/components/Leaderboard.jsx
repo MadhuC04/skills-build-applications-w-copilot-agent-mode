@@ -7,7 +7,7 @@ const Leaderboard = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('leaderboard')
+    fetchResource('/leaderboard')
       .then(({ json }) => {
         setLeaderboard({
           teams: Array.isArray(json.teams) ? json.teams : [],

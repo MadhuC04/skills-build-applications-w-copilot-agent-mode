@@ -7,7 +7,7 @@ const Users = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchResource('users')
+    fetchResource('/users')
       .then(({ list }) => {
         setUsers(list);
       })
